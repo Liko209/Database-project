@@ -3,10 +3,10 @@ import { Input, Button, Table, Space } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const dataSource = [
-	{ id: 31054, location: "Plaza Hotel", year: 1933, dish_count: 4053 },
-	{ id: 34201, location: "Waldorf Astoria", year: 1914, dish_count: 21312 },
-];
+// const dataSource = [
+// 	{ id: 31054, location: "Plaza Hotel", year: 1933, dish_count: 4053 },
+// 	{ id: 34201, location: "Waldorf Astoria", year: 1914, dish_count: 21312 },
+// ];
 
 function ViewMenuList(props) {
 	let { menuList } = props;
@@ -19,7 +19,6 @@ function ViewMenuList(props) {
 			key: "action",
 			render: (_, record) => (
 				<Space size="middle">
-					{/* <a href={`http://localhost:3000/${record.id}`}>Detail</a> */}
 					<Link to={`/menu_list/${record.id}`} key={record.id}>
 						Detail
 					</Link>
@@ -29,7 +28,7 @@ function ViewMenuList(props) {
 	];
 	return (
 		<div>
-			<Table columns={columns} dataSource={dataSource} />
+			<Table columns={columns} dataSource={menuList} />
 		</div>
 	);
 }
