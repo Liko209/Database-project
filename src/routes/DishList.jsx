@@ -82,7 +82,7 @@ export default function DishList() {
 					onChange={inputValueChange}
 				/>
 				<Button type="primary" onClick={AddTask}>
-					Submit
+					Search
 				</Button>
 			</Input.Group>
 			<ViewDishList dishList={dishList} />

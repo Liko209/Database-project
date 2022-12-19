@@ -88,7 +88,7 @@ export default function MenuList() {
 					onChange={inputValueChange}
 				/>
 				<Button type="primary" onClick={AddTask}>
-					Submit
+					Search
 				</Button>
 			</Input.Group>
 			<ViewMenuList menuList={menuList} />
