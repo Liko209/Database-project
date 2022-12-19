@@ -10,6 +10,9 @@ import axios from "axios";
 
 function ViewMenuList(props) {
 	let { menuList } = props;
+	const paginationProps = {
+		total: menuList.length,
+	};
 	const columns = [
 		{ title: "Location", dataIndex: "location", key: "location" },
 		{ title: "Year", dataIndex: "year", key: "year" },
@@ -28,7 +31,7 @@ function ViewMenuList(props) {
 	];
 	return (
 		<div>
-			<Table columns={columns} dataSource={menuList} />
+			<Table columns={columns} dataSource={menuList} pagination={paginationProps} />
 		</div>
 	);
 }
