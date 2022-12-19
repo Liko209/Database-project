@@ -13,8 +13,8 @@ root.render(
 				<Route path="/" element={<App />}>
 					<Route path="menu_list" element={<MenuList />} />
 					<Route path="dish_list" element={<MenuList />} />
+					<Route path="/menu_list/:menuId" element={<MenuDetail />} />
 				</Route>
-				<Route path="/menu_list/:menuId" element={<MenuDetail />} />
 				<Route path="/*" element={<p>[404] - Page Not Found</p>} />
 			</Routes>
 		</React.StrictMode>
