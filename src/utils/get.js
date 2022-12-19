@@ -1,19 +1,7 @@
-// new SELECT SQL
-// const userGETSQL = "SELECT count(*) FROM menu";
-// const userGETSQL1 = "call ShowMenuInfo('', 'location', 0, 100);";
-// const userGETSQL2 = "CALL ShowDishOfMenu(26698)";
-// const userGETSQL3 = "CALL ShowDishOfMenu(26698)";
-
-// connection.query(userGETSQL1, function (error, results, fields) {
-//   if (error) throw error;
-//   console.log(results);
-// });
-
-// connection.end();
-
 // Entry Point of the API Server
 
 const express = require("express");
+const cors = require("cors");
 
 /* Creates an Express application.
 The express() function is a top-level
@@ -40,17 +28,36 @@ is used, Generally used to extract the
 entire body portion of an incoming
 request stream and exposes it on req.body
 */
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 app.get("/showMenuInfo", (req, res, next) => {
-  console.log("TEST DATA :");
-  //   con.query("call ShowMenuInfo('', 'location', 0, 100)").then((testData) => {
-  //     console.log(testData);
-  //     // res.send(testData.rows);
+  console.log("showMenuInfo:");
+  console.log(req);
+  //   const query = "CALL ShowMenuInfo('', 'location', 0, 100)";
+  //   con.query(query, function (error, results, fields) {
+  //     if (error) throw error;
+  //     console.log(results);
+  //     res.send(results);
   //   });
-  const query = "call ShowMenuInfo('', 'location', 0, 100)";
+});
+
+app.get("/showDishInfo", (req, res, next) => {
+  console.log("showDishInfo:");
+  const query = "CALL ShowDishInfo('', 'Mene', 0, 100);";
+  con.query(query, function (error, results, fields) {
+    if (error) throw error;
+    console.log(results);
+    res.send(results.rows);
+  });
+});
+
+app.get("/showDishOfMenu", (req, res, next) => {
+  console.log("showDishOfMenu:");
+  const query = "CALL ShowDishOfMenu(26698);";
   con.query(query, function (error, results, fields) {
     if (error) throw error;
     console.log(results);
@@ -60,7 +67,7 @@ app.get("/showMenuInfo", (req, res, next) => {
 
 // Require the Routes API
 // Create a Server and run it on the port 3000
-const server = app.listen(3000, function () {
+const server = app.listen(3306, function () {
   let host = server.address().address;
   let port = server.address().port;
   // Starting the Server at the port 3000
