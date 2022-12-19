@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Button, Table, Space } from "antd";
 import axios from "axios";
 
 function ViewTodoList(props) {
-	let { todoList } = props;
+	let { dishList } = props;
 	const columns = [
-		{ title: "Name", dataIndex: "name", key: "name" },
+		{ title: "Id", dataIndex: "id", key: "id" },
+		{ title: "Location", dataIndex: "location", key: "location" },
+		{ title: "Year", dataIndex: "year", key: "year" },
+		{ title: "Dish Count", dataIndex: "dish_count", key: "dish_count" },
 		{
 			title: "Action",
 			key: "action",
@@ -19,28 +22,34 @@ function ViewTodoList(props) {
 	];
 	return (
 		<div>
-			<Table columns={columns} dataSource={todoList} />
+			<Table columns={columns} dataSource={dishList} />
 		</div>
 	);
 }
 
 export function TodoList() {
 	const [inputValue, setInputValue] = useState("");
-	const [todoList, setTodoList] = useState([]);
+	const [dishList, setDishList] = useState([]);
 
-	const axiosGET = () => {
+	useEffect(() => {
+		axiosGET();
+	});
+	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
 		axios
 			.get("http://localhost:3306/showMenuInfo", {
 				params: {
-					searchKey: "",
-					orderBy: "location",
-					startPos: 0,
-					pageSize: 100,
+					searchKey: searchKey,
+					orderBy: orderBy,
+					startPos: startPos,
+					pageSize: pageSize,
 				},
 			})
 			.then((res) => {
 				console.log("success GET!");
-				console.log(res.data);
+				console.log("res.data", res.data);
+				const newList = res.data[0];
+				console.log("newList", newList);
+				setDishList(newList);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -52,11 +61,11 @@ export function TodoList() {
 	};
 
 	let AddTask = () => {
-		const newItem = {
-			name: inputValue,
-		};
-		axiosGET();
-		inputValue && setTodoList([...todoList, newItem]);
+		// const newItem = {
+		// 	name: inputValue,
+		// };
+		axiosGET(inputValue);
+		// inputValue && setDishList([...dishList, newItem]);
 		setInputValue("");
 	};
 
@@ -84,7 +93,7 @@ export function TodoList() {
 					Submit
 				</Button>
 			</Input.Group>
-			<ViewTodoList todoList={todoList} />
+			<ViewTodoList dishList={dishList} />
 		</div>
 	);
 }
