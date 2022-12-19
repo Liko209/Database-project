@@ -30,7 +30,7 @@ export function TodoList() {
 
 	const axiosGET = () => {
 		axios
-			.get("http://localhost:3000/posts")
+			.get("http://localhost:3000/showMenuInfo")
 			.then((res) => {
 				console.log("success GET!");
 				console.log(res.data);
@@ -48,6 +48,7 @@ export function TodoList() {
 		const newItem = {
 			name: inputValue,
 		};
+		axiosGET();
 		inputValue && setTodoList([...todoList, newItem]);
 		setInputValue("");
 	};
