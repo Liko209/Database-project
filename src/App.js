@@ -1,21 +1,25 @@
 import React, { useState } from "react";
-import { Input, Button } from "antd";
+import { Input, Button, Table, Space } from "antd";
 import axios from "axios";
 
 function ViewTodoList(props) {
-	let { todoList, DelTask } = props;
+	let { todoList } = props;
+	const columns = [
+		{ title: "Name", dataIndex: "name", key: "name" },
+		{
+			title: "Action",
+			key: "action",
+			render: (_, record) => (
+				<Space size="middle">
+					{/* <a>Invite {record.name}</a> */}
+					<Button>View In Map</Button>
+				</Space>
+			),
+		},
+	];
 	return (
 		<div>
-			<ul>
-				{todoList.map((item, index) => {
-					return (
-						<div key={item + index}>
-							<li title={index}>{item}</li>
-							<button onClick={DelTask}>x</button>
-						</div>
-					);
-				})}
-			</ul>
+			<Table columns={columns} dataSource={todoList} />
 		</div>
 	);
 }
@@ -41,17 +45,20 @@ export function TodoList() {
 	};
 
 	let AddTask = () => {
-		inputValue && setTodoList([...todoList, inputValue]);
+		const newItem = {
+			name: inputValue,
+		};
+		inputValue && setTodoList([...todoList, newItem]);
 		setInputValue("");
 	};
 
-	let DelTask = (e) => {
-		console.log(e);
-		let target = parseInt(e.target.previousSibling.title);
-		todoList.splice(target, 1);
-		setTodoList([...todoList]);
-		// setTodoList([...todoList.filter((item,index) => index !== target)])
-	};
+	// let DelTask = (e) => {
+	// 	console.log(e);
+	// 	let target = parseInt(e.target.previousSibling.title);
+	// 	todoList.splice(target, 1);
+	// 	setTodoList([...todoList]);
+	// 	// setTodoList([...todoList.filter((item,index) => index !== target)])
+	// };
 
 	return (
 		<div>
@@ -65,9 +72,11 @@ export function TodoList() {
 					onPressEnter={AddTask}
 					onChange={inputValueChange}
 				/>
-				<Button type="primary">Submit</Button>
+				<Button type="primary" onClick={AddTask}>
+					Submit
+				</Button>
 			</Input.Group>
-			<ViewTodoList todoList={todoList} DelTask={DelTask} />
+			<ViewTodoList todoList={todoList} />
 		</div>
 	);
 }
