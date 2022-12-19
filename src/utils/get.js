@@ -55,7 +55,8 @@ app.get("/showMenuInfo", (req, res, next) => {
 app.get("/showDishInfo", (req, res, next) => {
   console.log("showDishInfo:");
   const params = req.query;
-  const query = `CALL ShowDishInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
+  //   const query = `CALL ShowDishInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
+  const query = "call ShowDishInfo('', 'Mene', 0, 100);";
   con.query(query, function (error, results, fields) {
     if (error) throw error;
     console.log(results);
