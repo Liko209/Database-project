@@ -30,11 +30,12 @@ function ViewTodoList(props) {
 export function TodoList() {
 	const [inputValue, setInputValue] = useState("");
 	const [dishList, setDishList] = useState([]);
-
+	const [firstRender, setFirstRender] = useState(true);
 	useEffect(() => {
-		axiosGET();
+		firstRender && axiosGET();
 	});
 	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
+		firstRender && setFirstRender(false);
 		axios
 			.get("http://localhost:3306/showMenuInfo", {
 				params: {
