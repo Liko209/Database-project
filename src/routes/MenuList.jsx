@@ -90,13 +90,13 @@ export default function MenuList() {
 	let sordBy = (index) => {
 		console.log(index);
 		switch (index) {
-			case 1:
+			case "1":
 				axiosGET("", "location");
 				break;
-			case 2:
+			case "2":
 				axiosGET("", "year");
 				break;
-			case 3:
+			case "3":
 				axiosGET("", "dish_count");
 				break;
 			default:
