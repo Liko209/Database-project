@@ -65,7 +65,8 @@ app.get("/showDishInfo", (req, res, next) => {
 
 app.get("/showDishOfMenu", (req, res, next) => {
   console.log("showDishOfMenu:");
-  const params = req.query;
+  //   const params = req.query;
+  const params = { menuID: 31054 };
   const query = `CALL ShowDishOfMenu(${params.menuID})`;
   con.query(query, function (error, results, fields) {
     if (error) throw error;
