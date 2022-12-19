@@ -196,14 +196,11 @@ const columns = [
 export default function MenuDetail() {
 	const params = useParams();
 	const [menuInfo, setMenuInfo] = useState([]);
-	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
+	const axiosGET = (searchKey = "") => {
 		axios
-			.get("http://localhost:3306/showMenuInfo", {
+			.get("http://localhost:3306/showDishOfMenu", {
 				params: {
-					searchKey: searchKey,
-					orderBy: orderBy,
-					startPos: startPos,
-					pageSize: pageSize,
+					menuID: searchKey
 				},
 			})
 			.then((res) => {
@@ -220,7 +217,11 @@ export default function MenuDetail() {
 	// const data = dataSource[1];
 
 	// database
+	console.log(1111);
+	console.log(menuInfo);
 	axiosGET(params.menuId);
+	console.log(22222);
+	console.log(menuInfo);
 	const RestaurantInfo = menuInfo[0][0];
 	const data = menuInfo[1];
 	return (
