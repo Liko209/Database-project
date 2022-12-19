@@ -13,15 +13,11 @@ function ViewDishList(props) {
 			title: "Name",
 			dataIndex: "name",
 			key: "name",
-			defaultSortOrder: "descend",
-			sorter: (a, b) => a.name - b.name,
 		},
 		{
 			title: "Menus Appeared",
 			dataIndex: "menus_appeared",
 			key: "menus_appeared",
-			defaultSortOrder: "descend",
-			sorter: (a, b) => a.menus_appeared - b.menus_appeared,
 		},
 		// {
 		// 	title: "Action",

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Input, Button, Table, Space } from "antd";
+import { Input, Button, Table, Space, Tabs } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -18,22 +18,16 @@ function ViewMenuList(props) {
 			title: "Location",
 			dataIndex: "location",
 			key: "location",
-			defaultSortOrder: "descend",
-			sorter: (a, b) => a.location - b.location,
 		},
 		{
 			title: "Year",
 			dataIndex: "year",
 			key: "year",
-			defaultSortOrder: "descend",
-			sorter: (a, b) => a.year - b.year,
 		},
 		{
 			title: "Dish Count",
 			dataIndex: "dish_count",
 			key: "dish_count",
-			defaultSortOrder: "descend",
-			sorter: (a, b) => a.dish_count - b.dish_count,
 		},
 		{
 			title: "Action",
@@ -93,6 +87,22 @@ export default function MenuList() {
 		setInputValue("");
 	};
 
+	let sordBy = (index) => {
+		console.log(index);
+		switch (index) {
+			case 1:
+				axiosGET("", "location");
+				break;
+			case 2:
+				axiosGET("", "year");
+				break;
+			case 3:
+				axiosGET("", "dish_count");
+				break;
+			default:
+		}
+	};
+
 	return (
 		<div>
 			<Input.Group compact>
@@ -109,6 +119,26 @@ export default function MenuList() {
 					Search
 				</Button>
 			</Input.Group>
+			<span>Sort By:</span>
+			<Tabs
+				style={{ display: "inline-block" }}
+				defaultActiveKey="1"
+				onChange={sordBy}
+				items={[
+					{
+						label: `Location`,
+						key: "1",
+					},
+					{
+						label: `Year`,
+						key: "2",
+					},
+					{
+						label: `Dish Count`,
+						key: "3",
+					},
+				]}
+			/>
 			<ViewMenuList menuList={menuList} />
 		</div>
 	);
