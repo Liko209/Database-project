@@ -18,6 +18,13 @@ const con = mysql.createConnection({
   database: "cs615FinalProject",
 });
 
+// const con = mysql.createConnection({
+//   host: "dbase.cs.jhu.edu",
+//   user: "22fa_ysun122",
+//   password: "2vBlIvqqs6",
+//   database: "22fa_ysun122_db",
+// });
+
 con.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
