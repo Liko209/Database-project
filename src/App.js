@@ -30,10 +30,15 @@ export function TodoList() {
 
   const axiosGET = () => {
     axios
-      .get("http://localhost:3000/showMenuInfo")
+      .get("http://localhost:3306/showMenuInfo", {
+        searchKey: "",
+        orderBy: "location",
+        startPos: 0,
+        pageSize: 100,
+      })
       .then((res) => {
         console.log("success GET!");
-        console.log(res);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
