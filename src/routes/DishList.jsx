@@ -45,7 +45,7 @@ export default function DishList() {
 	useEffect(() => {
 		firstRender && axiosGET();
 	});
-	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
+	const axiosGET = (searchKey = "", orderBy = "name", startPos = 0, pageSize = 100) => {
 		firstRender && setFirstRender(false);
 		axios
 			.get("http://localhost:3306/showDishInfo", {
