@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Input, Button, Table, Space } from "antd";
+import { Input, Button, Table, Tabs } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -77,6 +77,19 @@ export default function DishList() {
 		setInputValue("");
 	};
 
+	let sordBy = (index) => {
+		console.log(index);
+		switch (index) {
+			case "1":
+				axiosGET("", "name");
+				break;
+			case "2":
+				axiosGET("", "menus_appeared");
+				break;
+			default:
+		}
+	};
+
 	return (
 		<div>
 			<Input.Group compact>
@@ -93,6 +106,22 @@ export default function DishList() {
 					Search
 				</Button>
 			</Input.Group>
+			<span>Sort By:</span>
+			<Tabs
+				style={{ display: "inline-block" }}
+				defaultActiveKey="1"
+				onChange={sordBy}
+				items={[
+					{
+						label: `Name`,
+						key: "1",
+					},
+					{
+						label: `Menus Appeared`,
+						key: "2",
+					},
+				]}
+			/>
 			<ViewDishList dishList={dishList} />
 		</div>
 	);
