@@ -181,16 +181,22 @@ const columns = [
 		title: "Dish",
 		dataIndex: "name",
 		key: "dish",
+		defaultSortOrder: "descend",
+		sorter: (a, b) => a.name - b.name,
 	},
 	{
 		title: "Page",
 		dataIndex: "page_number",
 		key: "page",
+		defaultSortOrder: "descend",
+		sorter: (a, b) => a.page_number - b.page_number,
 	},
 	{
 		title: "Price",
 		dataIndex: "price",
 		key: "price",
+		defaultSortOrder: "descend",
+		sorter: (a, b) => a.price - b.price,
 	},
 ];
 export default function MenuDetail() {

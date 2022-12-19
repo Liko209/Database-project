@@ -14,9 +14,27 @@ function ViewMenuList(props) {
 		total: menuList.length,
 	};
 	const columns = [
-		{ title: "Location", dataIndex: "location", key: "location" },
-		{ title: "Year", dataIndex: "year", key: "year" },
-		{ title: "Dish Count", dataIndex: "dish_count", key: "dish_count" },
+		{
+			title: "Location",
+			dataIndex: "location",
+			key: "location",
+			defaultSortOrder: "descend",
+			sorter: (a, b) => a.location - b.location,
+		},
+		{
+			title: "Year",
+			dataIndex: "year",
+			key: "year",
+			defaultSortOrder: "descend",
+			sorter: (a, b) => a.year - b.year,
+		},
+		{
+			title: "Dish Count",
+			dataIndex: "dish_count",
+			key: "dish_count",
+			defaultSortOrder: "descend",
+			sorter: (a, b) => a.dish_count - b.dish_count,
+		},
 		{
 			title: "Action",
 			key: "action",
