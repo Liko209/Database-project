@@ -18,6 +18,13 @@ const con = mysql.createConnection({
   database: "cs615FinalProject",
 });
 
+// const con = mysql.createConnection({
+//   host: "dbase.cs.jhu.edu",
+//   user: "22fa_ysun122",
+//   password: "2vBlIvqqs6",
+//   database: "22fa_ysun122_db",
+// });
+
 con.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
@@ -37,7 +44,6 @@ app.use(cors());
 app.get("/showMenuInfo", (req, res, next) => {
   console.log("showMenuInfo:");
   const params = req.query;
-
   const query = `CALL ShowMenuInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
   con.query(query, function (error, results, fields) {
     if (error) throw error;
@@ -48,21 +54,25 @@ app.get("/showMenuInfo", (req, res, next) => {
 
 app.get("/showDishInfo", (req, res, next) => {
   console.log("showDishInfo:");
-  const query = "CALL ShowDishInfo('', 'Mene', 0, 100);";
+  const params = req.query;
+  //   const query = `CALL ShowDishInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
+  const query = "call ShowDishInfo('', 'Mene', 0, 100);";
   con.query(query, function (error, results, fields) {
     if (error) throw error;
     console.log(results);
-    res.send(results.rows);
+    res.send(results);
   });
 });
 
 app.get("/showDishOfMenu", (req, res, next) => {
   console.log("showDishOfMenu:");
-  const query = "CALL ShowDishOfMenu(26698);";
+  const params = req.query;
+  //   const params = { menuID: 31054 };
+  const query = `CALL ShowDishOfMenu(${params.menuID})`;
   con.query(query, function (error, results, fields) {
     if (error) throw error;
     console.log(results);
-    res.send(results.rows);
+    res.send(results);
   });
 });
 

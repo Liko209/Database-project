@@ -204,7 +204,7 @@ export default function MenuDetail() {
 	const axiosGET = (menuID = "") => {
 		firstRender && setFirstRender(false);
 		axios
-			.get("http://localhost:3306/showMenuInfo", {
+			.get("http://localhost:3306/showDishOfMenu", {
 				params: {
 					menuID: menuID,
 				},
