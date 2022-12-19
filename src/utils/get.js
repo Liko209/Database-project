@@ -44,7 +44,6 @@ app.use(cors());
 app.get("/showMenuInfo", (req, res, next) => {
   console.log("showMenuInfo:");
   const params = req.query;
-
   const query = `CALL ShowMenuInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
   con.query(query, function (error, results, fields) {
     if (error) throw error;
@@ -55,21 +54,23 @@ app.get("/showMenuInfo", (req, res, next) => {
 
 app.get("/showDishInfo", (req, res, next) => {
   console.log("showDishInfo:");
-  const query = "CALL ShowDishInfo('', 'Mene', 0, 100);";
+  const params = req.query;
+  const query = `CALL ShowDishInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
   con.query(query, function (error, results, fields) {
     if (error) throw error;
     console.log(results);
-    res.send(results.rows);
+    res.send(results);
   });
 });
 
 app.get("/showDishOfMenu", (req, res, next) => {
   console.log("showDishOfMenu:");
-  const query = "CALL ShowDishOfMenu(26698);";
+  const params = req.query;
+  const query = `CALL ShowDishOfMenu(${params.menuID})`;
   con.query(query, function (error, results, fields) {
     if (error) throw error;
     console.log(results);
-    res.send(results.rows);
+    res.send(results);
   });
 });
 
