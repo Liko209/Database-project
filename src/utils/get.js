@@ -36,13 +36,14 @@ app.use(cors());
 
 app.get("/showMenuInfo", (req, res, next) => {
   console.log("showMenuInfo:");
-  console.log(req);
-  //   const query = "CALL ShowMenuInfo('', 'location', 0, 100)";
-  //   con.query(query, function (error, results, fields) {
-  //     if (error) throw error;
-  //     console.log(results);
-  //     res.send(results);
-  //   });
+  const params = req.query;
+
+  const query = `CALL ShowMenuInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
+  con.query(query, function (error, results, fields) {
+    if (error) throw error;
+    console.log(results);
+    res.send(results);
+  });
 });
 
 app.get("/showDishInfo", (req, res, next) => {
