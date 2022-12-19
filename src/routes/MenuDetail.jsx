@@ -201,15 +201,12 @@ export default function MenuDetail() {
 	useEffect(() => {
 		firstRender && axiosGET(params.menuId);
 	});
-	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
+	const axiosGET = (menuID = "") => {
 		firstRender && setFirstRender(false);
 		axios
 			.get("http://localhost:3306/showMenuInfo", {
 				params: {
-					searchKey: searchKey,
-					orderBy: orderBy,
-					startPos: startPos,
-					pageSize: pageSize,
+					menuID: menuID,
 				},
 			})
 			.then((res) => {
