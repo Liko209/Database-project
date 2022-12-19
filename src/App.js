@@ -28,7 +28,6 @@ export function TodoList() {
 		axios
 			.get("http://localhost:3000/posts")
 			.then((res) => {
-				setPostList(res.data);
 				console.log("success GET!");
 				console.log(res.data);
 			})
