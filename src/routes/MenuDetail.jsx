@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Descriptions, Table } from "antd";
 import styled from "styled-components";
 import axios from "axios";
@@ -195,8 +195,14 @@ const columns = [
 ];
 export default function MenuDetail() {
 	const params = useParams();
-	const [menuInfo, setMenuInfo] = useState([]);
+	const [resInfo, setResInfo] = useState({});
+	const [dishInfo, setDishInfo] = useState([]);
+	const [firstRender, setFirstRender] = useState(true);
+	useEffect(() => {
+		firstRender && axiosGET(params.menuId);
+	});
 	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
+		firstRender && setFirstRender(false);
 		axios
 			.get("http://localhost:3306/showMenuInfo", {
 				params: {
@@ -209,42 +215,42 @@ export default function MenuDetail() {
 			.then((res) => {
 				console.log("success GET!");
 				console.log("res.data", res.data);
-				setMenuInfo(res.data);
+				const newResInfo = res.data[0][0];
+				const newDishInfo = res.data[1];
+				console.log("newResInfo", newResInfo);
+				console.log("newDishInfo", newDishInfo);
+				setResInfo(newResInfo);
+				setDishInfo(newDishInfo);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
 	// static
-	// const RestaurantInfo = dataSource[0][0];
+	// const resInfo = dataSource[0][0];
 	// const data = dataSource[1];
-
-	// database
-	axiosGET(params.menuId);
-	const RestaurantInfo = menuInfo[0][0];
-	const data = menuInfo[1];
 	return (
 		<>
-			<h1>{RestaurantInfo.location}</h1>
+			<h1>{resInfo.location}</h1>
 			<container>
 				<div className="left">
 					<Descriptions title="Restaurant Info" bordered layout="vertical">
-						<Descriptions.Item label="Location">{RestaurantInfo.location || "N/A"}</Descriptions.Item>
-						<Descriptions.Item label="Dish">{RestaurantInfo.dish_count || "N/A"}</Descriptions.Item>
-						<Descriptions.Item label="Date">{RestaurantInfo.date || "N/A"}</Descriptions.Item>
+						<Descriptions.Item label="Location">{resInfo.location || "N/A"}</Descriptions.Item>
+						<Descriptions.Item label="Dish">{resInfo.dish_count || "N/A"}</Descriptions.Item>
+						<Descriptions.Item label="Date">{resInfo.date || "N/A"}</Descriptions.Item>
 						<Descriptions.Item label="Sponsor" span={2}>
-							{RestaurantInfo.sponsor || "N/A"}
+							{resInfo.sponsor || "N/A"}
 						</Descriptions.Item>
-						<Descriptions.Item label="Place">{RestaurantInfo.place || "N/A"}</Descriptions.Item>
+						<Descriptions.Item label="Place">{resInfo.place || "N/A"}</Descriptions.Item>
 						<Descriptions.Item label="Physical description">
-							{RestaurantInfo.descriptions || "N/A"}
+							{resInfo.descriptions || "N/A"}
 						</Descriptions.Item>
-						<Descriptions.Item label="Call number">{RestaurantInfo.call_number || "N/A"}</Descriptions.Item>
-						<Descriptions.Item label="Notes">{RestaurantInfo.notes || "N/A"}</Descriptions.Item>
+						<Descriptions.Item label="Call number">{resInfo.call_number || "N/A"}</Descriptions.Item>
+						<Descriptions.Item label="Notes">{resInfo.notes || "N/A"}</Descriptions.Item>
 					</Descriptions>
 				</div>
 				<div className="right">
-					<Table columns={columns} dataSource={data} />
+					<Table columns={columns} dataSource={dishInfo} />
 				</div>
 			</container>
 		</>
