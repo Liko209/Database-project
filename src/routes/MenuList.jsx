@@ -55,7 +55,7 @@ export default function MenuList() {
 	useEffect(() => {
 		firstRender && axiosGET();
 	});
-	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
+	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 10000) => {
 		firstRender && setFirstRender(false);
 		axios
 			.get("http://localhost:3306/showMenuInfo", {

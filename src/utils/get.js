@@ -44,10 +44,11 @@ app.use(cors());
 app.get("/showMenuInfo", (req, res, next) => {
   console.log("showMenuInfo:");
   const params = req.query;
+  console.log(params);
   const query = `CALL ShowMenuInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
   con.query(query, function (error, results, fields) {
     if (error) throw error;
-    console.log(results);
+    // console.log(results);
     res.send(results);
   });
 });
@@ -55,11 +56,12 @@ app.get("/showMenuInfo", (req, res, next) => {
 app.get("/showDishInfo", (req, res, next) => {
   console.log("showDishInfo:");
   const params = req.query;
-  //   const query = `CALL ShowDishInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
-  const query = "call ShowDishInfo('', 'Mene', 0, 100);";
+  console.log(params);
+  const query = `CALL ShowDishInfo('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
+  //   const query = "call ShowDishInfo('', 'Mene', 0, 100);";
   con.query(query, function (error, results, fields) {
     if (error) throw error;
-    console.log(results);
+    // console.log(results);
     res.send(results);
   });
 });
@@ -68,10 +70,23 @@ app.get("/showDishOfMenu", (req, res, next) => {
   console.log("showDishOfMenu:");
   const params = req.query;
   //   const params = { menuID: 31054 };
+  console.log(params);
   const query = `CALL ShowDishOfMenu(${params.menuID})`;
   con.query(query, function (error, results, fields) {
     if (error) throw error;
-    console.log(results);
+    // console.log(results);
+    res.send(results);
+  });
+});
+
+app.get("/searchMenuByDish", (req, res, next) => {
+  console.log("searchMenuByDish:");
+  const params = req.query;
+  console.log(params);
+  const query = `CALL SearchMenuByDish('${params.searchKey}', '${params.orderBy}', ${params.startPos}, ${params.pageSize})`;
+  con.query(query, function (error, results, fields) {
+    if (error) throw error;
+    // console.log(results);
     res.send(results);
   });
 });
