@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function ViewMenuList(props) {
-	let { menuList } = props;
+	let { menuList, numOfMenuItem } = props;
 	const paginationProps = {
-		total: menuList.length,
+		defaultCurrent: 1,
+		total: numOfMenuItem,
 	};
 	const columns = [
 		{
@@ -46,6 +47,7 @@ function ViewMenuList(props) {
 export default function MenuList() {
 	const [inputValue, setInputValue] = useState("");
 	const [menuList, setMenuList] = useState([]);
+	const [numOfMenuItem, setNumOfMenuItem] = useState(0);
 	const [firstRender, setFirstRender] = useState(true);
 	useEffect(() => {
 		firstRender && axiosGET();
@@ -66,7 +68,10 @@ export default function MenuList() {
 				console.log("res.data", res.data);
 				const newList = res.data[0];
 				console.log("newList", newList);
+				const menuItem = res.data[1].numResult;
+				console.log("menuItem", menuItem);
 				setMenuList(newList);
+				setNumOfMenuItem(menuItem);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -134,7 +139,7 @@ export default function MenuList() {
 					},
 				]}
 			/>
-			<ViewMenuList menuList={menuList} />
+			<ViewMenuList menuList={menuList} numOfMenuItem={numOfMenuItem} />
 		</div>
 	);
 }
