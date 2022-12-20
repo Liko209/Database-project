@@ -140,23 +140,23 @@ export default function MenuList() {
 					console.log("res.data", res.data);
 					const newList = res.data[0];
 					console.log("newList", newList);
-					console.log([...menuList, ...newList]);
 					setMenuList([...menuList, ...newList]);
 				})
 				.catch((err) => {
 					console.log(err);
 				});
 		};
+		const diff = page * 10 - menuList.length;
 		if (shouldGetNewDataFromDB && menuList.length < numOfMenuItem) {
 			switch (sortBy) {
 				case "1":
-					axiosAppend(inputValue, "location", menuList.length);
+					axiosAppend(inputValue, "location", menuList.length, diff);
 					break;
 				case "2":
-					axiosAppend(inputValue, "year", menuList.length);
+					axiosAppend(inputValue, "year", menuList.length, diff);
 					break;
 				case "3":
-					axiosAppend(inputValue, "dish_count", menuList.length);
+					axiosAppend(inputValue, "dish_count", menuList.length, diff);
 					break;
 				default:
 			}
