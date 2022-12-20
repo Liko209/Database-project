@@ -41,7 +41,13 @@ function ViewMenuList(props) {
 	];
 	return (
 		<div>
-			<Table columns={columns} dataSource={menuList} pagination={paginationProps} showSizeChanger={false} loading={}/>
+			<Table
+				columns={columns}
+				dataSource={menuList}
+				pagination={paginationProps}
+				showSizeChanger={false}
+				loading={loading}
+			/>
 		</div>
 	);
 }
