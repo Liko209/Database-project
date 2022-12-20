@@ -192,7 +192,7 @@ export default function DishList() {
 			/>
 			<ViewDishList
 				dishList={dishList}
-				numOfMenuItem={numOfDishItem}
+				numOfDishItem={numOfDishItem}
 				current={current}
 				handleChange={handleChange}
 				loading={loading}
