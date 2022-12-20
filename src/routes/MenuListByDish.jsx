@@ -95,6 +95,7 @@ export default function MenuListByDish() {
 	};
 
 	let handleSearch = () => {
+		setLoading(true);
 		switch (sortBy) {
 			case "1":
 				axiosGET(inputValue, "location");
@@ -111,6 +112,7 @@ export default function MenuListByDish() {
 	};
 
 	let handleSordBy = (index) => {
+		setLoading(true);
 		switch (index) {
 			case "1":
 				setSortBy("1");
@@ -149,6 +151,7 @@ export default function MenuListByDish() {
 					const newList = res.data[0];
 					console.log("newList", newList);
 					setMenuList([...menuList, ...newList]);
+					setLoading(false);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -156,6 +159,7 @@ export default function MenuListByDish() {
 		};
 		const diff = page * 10 - menuList.length;
 		if (shouldGetNewDataFromDB && menuList.length < numOfMenuItem) {
+			setLoading(true);
 			switch (sortBy) {
 				case "1":
 					axiosAppend(inputValue, "location", menuList.length, diff);
