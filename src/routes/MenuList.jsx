@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function ViewMenuList(props) {
-	let { menuList, numOfMenuItem } = props;
+	let { menuList, numOfMenuItem, current, handleChange } = props;
 	const paginationProps = {
+		current: current,
 		defaultCurrent: 1,
 		total: numOfMenuItem,
+		onchange: handleChange,
 	};
 	const columns = [
 		{
@@ -48,6 +50,7 @@ export default function MenuList() {
 	const [inputValue, setInputValue] = useState("");
 	const [menuList, setMenuList] = useState([]);
 	const [numOfMenuItem, setNumOfMenuItem] = useState(0);
+	const [current, setCurrent] = useState(1);
 	const [firstRender, setFirstRender] = useState(true);
 	useEffect(() => {
 		firstRender && axiosGET();
@@ -68,7 +71,7 @@ export default function MenuList() {
 				console.log("res.data", res.data);
 				const newList = res.data[0];
 				console.log("newList", newList);
-				const menuItem = res.data[1].numResult;
+				const menuItem = res.data[1][0].numResult;
 				console.log("menuItem", menuItem);
 				setMenuList(newList);
 				setNumOfMenuItem(menuItem);
@@ -82,8 +85,9 @@ export default function MenuList() {
 		setInputValue(e.target.value);
 	};
 
-	let AddTask = () => {
+	let handleSearch = () => {
 		axiosGET(inputValue);
+		setCurrent(1);
 		setInputValue("");
 	};
 
@@ -103,6 +107,10 @@ export default function MenuList() {
 		}
 	};
 
+	let handleChange = (page) => {
+		setCurrent(page);
+	};
+
 	return (
 		<div>
 			<Input.Group compact>
@@ -112,10 +120,10 @@ export default function MenuList() {
 					}}
 					defaultValue="https://ant.design"
 					value={inputValue}
-					onPressEnter={AddTask}
+					onPressEnter={handleSearch}
 					onChange={inputValueChange}
 				/>
-				<Button type="primary" onClick={AddTask}>
+				<Button type="primary" onClick={handleSearch}>
 					Search
 				</Button>
 			</Input.Group>
@@ -139,7 +147,12 @@ export default function MenuList() {
 					},
 				]}
 			/>
-			<ViewMenuList menuList={menuList} numOfMenuItem={numOfMenuItem} />
+			<ViewMenuList
+				menuList={menuList}
+				numOfMenuItem={numOfMenuItem}
+				current={current}
+				handleChange={handleChange}
+			/>
 		</div>
 	);
 }
