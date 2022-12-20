@@ -68,7 +68,7 @@ export default function MenuList() {
 				console.log("res.data", res.data);
 				const newList = res.data[0];
 				console.log("newList", newList);
-				const menuItem = res.data[1].numResult;
+				const menuItem = res.data[1][0].numResult;
 				console.log("menuItem", menuItem);
 				setMenuList(newList);
 				setNumOfMenuItem(menuItem);
