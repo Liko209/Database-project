@@ -100,22 +100,21 @@ export default function MenuList() {
 			default:
 		}
 		setCurrent(1);
-		setInputValue("");
 	};
 
 	let handleSordBy = (index) => {
 		switch (index) {
 			case "1":
 				setSortBy("1");
-				axiosGET("", "location");
+				axiosGET(inputValue, "location");
 				break;
 			case "2":
 				setSortBy("2");
-				axiosGET("", "year");
+				axiosGET(inputValue, "year");
 				break;
 			case "3":
 				setSortBy("3");
-				axiosGET("", "dish_count");
+				axiosGET(inputValue, "dish_count");
 				break;
 			default:
 		}
