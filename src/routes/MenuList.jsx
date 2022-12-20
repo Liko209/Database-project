@@ -95,6 +95,7 @@ export default function MenuList() {
 	};
 
 	let handleSearch = () => {
+		setLoading(true);
 		switch (sortBy) {
 			case "1":
 				axiosGET(inputValue, "location");
@@ -111,6 +112,7 @@ export default function MenuList() {
 	};
 
 	let handleSordBy = (index) => {
+		setLoading(true);
 		switch (index) {
 			case "1":
 				setSortBy("1");
@@ -156,6 +158,7 @@ export default function MenuList() {
 		};
 		const diff = page * 10 - menuList.length;
 		if (shouldGetNewDataFromDB && menuList.length < numOfMenuItem) {
+			setLoading(true);
 			switch (sortBy) {
 				case "1":
 					axiosAppend(inputValue, "location", menuList.length, diff);

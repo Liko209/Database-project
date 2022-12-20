@@ -3,7 +3,7 @@ import { Input, Button, Table, Tabs } from "antd";
 import axios from "axios";
 
 function ViewDishList(props) {
-	let { dishList, numOfDishItem, current, handleChange } = props;
+	let { dishList, numOfDishItem, current, handleChange, loading } = props;
 	const paginationProps = {
 		current: current,
 		defaultCurrent: 1,
@@ -24,7 +24,13 @@ function ViewDishList(props) {
 	];
 	return (
 		<div>
-			<Table columns={columns} dataSource={dishList} pagination={paginationProps} showSizeChanger={false} />
+			<Table
+				columns={columns}
+				dataSource={dishList}
+				pagination={paginationProps}
+				showSizeChanger={false}
+				loading={loading}
+			/>
 		</div>
 	);
 }
@@ -36,6 +42,7 @@ export default function DishList() {
 	const [numOfDishItem, setNumOfDishItem] = useState(0);
 	const [current, setCurrent] = useState(1);
 	const [firstRender, setFirstRender] = useState(true);
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		firstRender && axiosGET();
 	});
@@ -59,6 +66,7 @@ export default function DishList() {
 				const dishItem = res.data[1][0].numResult;
 				console.log("dishItem", dishItem);
 				setNumOfDishItem(dishItem);
+				setLoading(false);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -70,6 +78,7 @@ export default function DishList() {
 	};
 
 	let handleSearch = () => {
+		setLoading(true);
 		switch (sortBy) {
 			case "1":
 				axiosGET(inputValue, "location");
@@ -86,6 +95,7 @@ export default function DishList() {
 	};
 
 	let handleSordBy = (index) => {
+		setLoading(true);
 		switch (index) {
 			case "1":
 				setSortBy("1");
@@ -124,6 +134,7 @@ export default function DishList() {
 					const newList = res.data[0];
 					console.log("newList", newList);
 					setDishList([...dishList, ...newList]);
+					setLoading(false);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -131,6 +142,7 @@ export default function DishList() {
 		};
 		const diff = page * 10 - dishList.length;
 		if (shouldGetNewDataFromDB && dishList.length < numOfDishItem) {
+			setLoading(true);
 			switch (sortBy) {
 				case "1":
 					axiosAppend(inputValue, "location", dishList.length, diff);
@@ -183,6 +195,7 @@ export default function DishList() {
 				numOfMenuItem={numOfDishItem}
 				current={current}
 				handleChange={handleChange}
+				loading={loading}
 			/>
 		</div>
 	);
