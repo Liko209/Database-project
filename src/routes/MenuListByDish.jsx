@@ -53,7 +53,7 @@ export default function MenuListByDish() {
 	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
 		firstRender && setFirstRender(false);
 		axios
-			.get("http://localhost:3306/showMenuInfo", {
+			.get("http://localhost:3306/searchMenuByDish", {
 				params: {
 					searchKey: searchKey,
 					orderBy: orderBy,
