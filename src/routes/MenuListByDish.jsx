@@ -43,14 +43,14 @@ function ViewMenuList(props) {
 	);
 }
 
-export default function MenuList() {
+export default function MenuListByDish() {
 	const [inputValue, setInputValue] = useState("");
 	const [menuList, setMenuList] = useState([]);
 	const [firstRender, setFirstRender] = useState(true);
 	useEffect(() => {
 		firstRender && axiosGET();
 	});
-	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 10000) => {
+	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
 		firstRender && setFirstRender(false);
 		axios
 			.get("http://localhost:3306/showMenuInfo", {

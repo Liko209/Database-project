@@ -19,17 +19,6 @@ function ViewDishList(props) {
 			dataIndex: "menus_appeared",
 			key: "menus_appeared",
 		},
-		// {
-		// 	title: "Action",
-		// 	key: "action",
-		// 	render: (_, record) => (
-		// 		<Space size="middle">
-		// 			<Link to={`/dish_list/${record.id}`} key={record.id}>
-		// 				Detail
-		// 			</Link>
-		// 		</Space>
-		// 	),
-		// },
 	];
 	return (
 		<div>
