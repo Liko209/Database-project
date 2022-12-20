@@ -10,6 +10,7 @@ function ViewMenuList(props) {
 		defaultCurrent: 1,
 		total: numOfMenuItem,
 		onChange: handleChange,
+		pageSize: 10
 	};
 	const columns = [
 		{
