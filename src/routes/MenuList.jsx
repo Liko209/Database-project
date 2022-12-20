@@ -118,6 +118,7 @@ export default function MenuList() {
 				break;
 			default:
 		}
+		setCurrent(1);
 	};
 
 	let handleChange = (page) => {
