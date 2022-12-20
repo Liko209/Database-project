@@ -4,13 +4,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function ViewMenuList(props) {
-	let { menuList, numOfMenuItem, current, handleChange } = props;
+	let { menuList, numOfMenuItem, current, handleChange, loading } = props;
 	const paginationProps = {
 		current: current,
 		defaultCurrent: 1,
 		total: numOfMenuItem,
 		onChange: handleChange,
-		pageSize: 10
 	};
 	const columns = [
 		{
@@ -42,7 +41,7 @@ function ViewMenuList(props) {
 	];
 	return (
 		<div>
-			<Table columns={columns} dataSource={menuList} pagination={paginationProps} showSizeChanger={false} />
+			<Table columns={columns} dataSource={menuList} pagination={paginationProps} showSizeChanger={false} loading={}/>
 		</div>
 	);
 }
@@ -54,6 +53,7 @@ export default function MenuList() {
 	const [numOfMenuItem, setNumOfMenuItem] = useState(0);
 	const [current, setCurrent] = useState(1);
 	const [firstRender, setFirstRender] = useState(true);
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		firstRender && axiosGET();
 	});
@@ -77,6 +77,7 @@ export default function MenuList() {
 				console.log("menuItem", menuItem);
 				setMenuList(newList);
 				setNumOfMenuItem(menuItem);
+				setLoading(false);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -205,6 +206,7 @@ export default function MenuList() {
 				numOfMenuItem={numOfMenuItem}
 				current={current}
 				handleChange={handleChange}
+				loading={loading}
 			/>
 		</div>
 	);
