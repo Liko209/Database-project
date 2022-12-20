@@ -41,7 +41,7 @@ function ViewMenuList(props) {
 	];
 	return (
 		<div>
-			<Table columns={columns} dataSource={menuList} pagination={paginationProps} />
+			<Table columns={columns} dataSource={menuList} pagination={paginationProps} showSizeChanger={false} />
 		</div>
 	);
 }
@@ -122,6 +122,43 @@ export default function MenuList() {
 
 	let handleChange = (page) => {
 		setCurrent(page);
+		const startPage = Math.floor(menuList.length / 10) - page;
+		const shouldGetNewDataFromDB = startPage < 0;
+		const axiosAppend = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 10000) => {
+			axios
+				.get("http://localhost:3306/showMenuInfo", {
+					params: {
+						searchKey: searchKey,
+						orderBy: orderBy,
+						startPos: startPos,
+						pageSize: pageSize,
+					},
+				})
+				.then((res) => {
+					console.log("success GET!");
+					console.log("res.data", res.data);
+					const newList = res.data[0];
+					console.log("newList", newList);
+					setMenuList([...menuList, newList]);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		};
+		if (shouldGetNewDataFromDB && menuList.length < numOfMenuItem) {
+			switch (sortBy) {
+				case "1":
+					axiosAppend(inputValue, "location", menuList.length);
+					break;
+				case "2":
+					axiosAppend(inputValue, "year", menuList.length);
+					break;
+				case "3":
+					axiosAppend(inputValue, "dish_count", menuList.length);
+					break;
+				default:
+			}
+		}
 	};
 
 	return (

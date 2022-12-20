@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function ViewMenuList(props) {
-	let { menuList } = props;
+	let { menuList, numOfMenuItem, current, handleChange } = props;
 	const paginationProps = {
-		total: menuList.length,
+		current: current,
+		defaultCurrent: 1,
+		total: numOfMenuItem,
+		onChange: handleChange,
 	};
 	const columns = [
 		{
@@ -46,6 +49,9 @@ function ViewMenuList(props) {
 export default function MenuListByDish() {
 	const [inputValue, setInputValue] = useState("");
 	const [menuList, setMenuList] = useState([]);
+	const [sortBy, setSortBy] = useState("1");
+	const [numOfMenuItem, setNumOfMenuItem] = useState(0);
+	const [current, setCurrent] = useState(1);
 	const [firstRender, setFirstRender] = useState(true);
 	useEffect(() => {
 		firstRender && axiosGET();
@@ -66,7 +72,10 @@ export default function MenuListByDish() {
 				console.log("res.data", res.data);
 				const newList = res.data[0];
 				console.log("newList", newList);
+				const menuItem = res.data[1][0].numResult;
+				console.log("menuItem", menuItem);
 				setMenuList(newList);
+				setNumOfMenuItem(menuItem);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -77,25 +86,42 @@ export default function MenuListByDish() {
 		setInputValue(e.target.value);
 	};
 
-	let AddTask = () => {
-		axiosGET(inputValue);
-		setInputValue("");
-	};
-
-	let sordBy = (index) => {
-		console.log(index);
-		switch (index) {
+	let handleSearch = () => {
+		switch (sortBy) {
 			case "1":
-				axiosGET("", "location");
+				axiosGET(inputValue, "location");
 				break;
 			case "2":
-				axiosGET("", "year");
+				axiosGET(inputValue, "year");
 				break;
 			case "3":
-				axiosGET("", "dish_count");
+				axiosGET(inputValue, "dish_count");
 				break;
 			default:
 		}
+		setCurrent(1);
+	};
+
+	let handleSordBy = (index) => {
+		switch (index) {
+			case "1":
+				setSortBy("1");
+				axiosGET(inputValue, "location");
+				break;
+			case "2":
+				setSortBy("2");
+				axiosGET(inputValue, "year");
+				break;
+			case "3":
+				setSortBy("3");
+				axiosGET(inputValue, "dish_count");
+				break;
+			default:
+		}
+	};
+
+	let handleChange = (page) => {
+		setCurrent(page);
 	};
 
 	return (
@@ -107,10 +133,10 @@ export default function MenuListByDish() {
 					}}
 					defaultValue="https://ant.design"
 					value={inputValue}
-					onPressEnter={AddTask}
+					onPressEnter={handleSearch}
 					onChange={inputValueChange}
 				/>
-				<Button type="primary" onClick={AddTask}>
+				<Button type="primary" onClick={handleSearch}>
 					Search
 				</Button>
 			</Input.Group>
@@ -118,7 +144,7 @@ export default function MenuListByDish() {
 			<Tabs
 				style={{ display: "inline-block" }}
 				defaultActiveKey="1"
-				onChange={sordBy}
+				onChange={handleSordBy}
 				items={[
 					{
 						label: `Location`,
@@ -134,7 +160,12 @@ export default function MenuListByDish() {
 					},
 				]}
 			/>
-			<ViewMenuList menuList={menuList} />
+			<ViewMenuList
+				menuList={menuList}
+				numOfMenuItem={numOfMenuItem}
+				current={current}
+				handleChange={handleChange}
+			/>
 		</div>
 	);
 }

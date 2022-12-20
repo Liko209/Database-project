@@ -53,9 +53,6 @@ export default function MenuDetail() {
 				console.log(err);
 			});
 	};
-	// static
-	// const resInfo = dataSource[0][0];
-	// const data = dataSource[1];
 	return (
 		<>
 			<h1>{resInfo.location}</h1>
