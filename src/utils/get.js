@@ -11,19 +11,19 @@ const app = express();
 const mysql = require("mysql2");
 
 // connection configration
-const con = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "Syx2yx!!",
-  database: "cs615FinalProject",
-});
-
 // const con = mysql.createConnection({
-//   host: "dbase.cs.jhu.edu",
-//   user: "22fa_ysun122",
-//   password: "2vBlIvqqs6",
-//   database: "22fa_ysun122_db",
+//   host: "127.0.0.1",
+//   user: "root",
+//   password: "Syx2yx!!",
+//   database: "cs615FinalProject",
 // });
+
+const con = mysql.createConnection({
+  host: "dbase.cs.jhu.edu",
+  user: "22fa_ysun122",
+  password: "2vBlIvqqs6",
+  database: "22fa_ysun122_db",
+});
 
 con.connect(function (err) {
   if (err) throw err;
