@@ -151,6 +151,7 @@ export default function MenuList() {
 					const newList = res.data[0];
 					console.log("newList", newList);
 					setMenuList([...menuList, ...newList]);
+					setLoading(false);
 				})
 				.catch((err) => {
 					console.log(err);
