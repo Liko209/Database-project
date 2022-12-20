@@ -14,8 +14,6 @@ const mysql = require("mysql2");
 // const con = mysql.createConnection({
 //   host: "127.0.0.1",
 //   user: "root",
-//   password: "Syx2yx!!",
-//   database: "cs615FinalProject",
 // });
 
 const con = mysql.createConnection({
