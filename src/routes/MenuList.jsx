@@ -9,7 +9,7 @@ function ViewMenuList(props) {
 		current: current,
 		defaultCurrent: 1,
 		total: numOfMenuItem,
-		onchange: handleChange,
+		onChange: handleChange,
 	};
 	const columns = [
 		{
@@ -49,6 +49,7 @@ function ViewMenuList(props) {
 export default function MenuList() {
 	const [inputValue, setInputValue] = useState("");
 	const [menuList, setMenuList] = useState([]);
+	const [sortBy, setSortBy] = useState("1");
 	const [numOfMenuItem, setNumOfMenuItem] = useState(0);
 	const [current, setCurrent] = useState(1);
 	const [firstRender, setFirstRender] = useState(true);
@@ -86,21 +87,34 @@ export default function MenuList() {
 	};
 
 	let handleSearch = () => {
-		axiosGET(inputValue);
+		switch (sortBy) {
+			case "1":
+				axiosGET(inputValue, "location");
+				break;
+			case "2":
+				axiosGET(inputValue, "year");
+				break;
+			case "3":
+				axiosGET(inputValue, "dish_count");
+				break;
+			default:
+		}
 		setCurrent(1);
 		setInputValue("");
 	};
 
-	let sordBy = (index) => {
-		console.log(index);
+	let handleSordBy = (index) => {
 		switch (index) {
 			case "1":
+				setSortBy("1");
 				axiosGET("", "location");
 				break;
 			case "2":
+				setSortBy("2");
 				axiosGET("", "year");
 				break;
 			case "3":
+				setSortBy("3");
 				axiosGET("", "dish_count");
 				break;
 			default:
@@ -131,7 +145,7 @@ export default function MenuList() {
 			<Tabs
 				style={{ display: "inline-block" }}
 				defaultActiveKey="1"
-				onChange={sordBy}
+				onChange={handleSordBy}
 				items={[
 					{
 						label: `Location`,
