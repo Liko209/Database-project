@@ -10,6 +10,7 @@ function ViewMenuList(props) {
 		defaultCurrent: 1,
 		total: numOfMenuItem,
 		onChange: handleChange,
+		pageSize: 10
 	};
 	const columns = [
 		{
@@ -56,7 +57,7 @@ export default function MenuList() {
 	useEffect(() => {
 		firstRender && axiosGET();
 	});
-	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 10000) => {
+	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 10) => {
 		firstRender && setFirstRender(false);
 		axios
 			.get("http://localhost:3306/showMenuInfo", {
@@ -124,7 +125,7 @@ export default function MenuList() {
 		setCurrent(page);
 		const startPage = Math.floor(menuList.length / 10) - page;
 		const shouldGetNewDataFromDB = startPage < 0;
-		const axiosAppend = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 10000) => {
+		const axiosAppend = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 10) => {
 			axios
 				.get("http://localhost:3306/showMenuInfo", {
 					params: {
@@ -139,7 +140,8 @@ export default function MenuList() {
 					console.log("res.data", res.data);
 					const newList = res.data[0];
 					console.log("newList", newList);
-					setMenuList([...menuList, newList]);
+					console.log([...menuList, ...newList]);
+					setMenuList([...menuList, ...newList]);
 				})
 				.catch((err) => {
 					console.log(err);
