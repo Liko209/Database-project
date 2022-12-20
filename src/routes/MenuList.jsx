@@ -57,7 +57,7 @@ export default function MenuList() {
 	useEffect(() => {
 		firstRender && axiosGET();
 	});
-	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 10) => {
+	const axiosGET = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
 		firstRender && setFirstRender(false);
 		axios
 			.get("http://localhost:3306/showMenuInfo", {
@@ -125,7 +125,7 @@ export default function MenuList() {
 		setCurrent(page);
 		const startPage = Math.floor(menuList.length / 10) - page;
 		const shouldGetNewDataFromDB = startPage < 0;
-		const axiosAppend = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 10) => {
+		const axiosAppend = (searchKey = "", orderBy = "location", startPos = 0, pageSize = 100) => {
 			axios
 				.get("http://localhost:3306/showMenuInfo", {
 					params: {
